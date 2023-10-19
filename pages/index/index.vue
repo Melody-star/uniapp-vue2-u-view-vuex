@@ -1,21 +1,42 @@
 <template>
 	<view class="content">
-
+		{{todos}}
+		<u-button @click="request" text="请求"></u-button>
 	</view>
 </template>
 
 <script>
+	import store from '@/store/index.js'
+	import {
+		mapState
+	} from 'vuex'
+
 	export default {
 		data() {
 			return {
 				title: 'Hello'
 			}
 		},
-		onLoad() {
-
+		computed: {
+			...mapState({
+				todos: state => state.todos
+			})
 		},
 		methods: {
+			request() {
 
+				store.commit('add', {
+					id: 5,
+					coo: '正式'
+				})
+
+				this.$api.login({
+					username: "张三",
+					password: '123456'
+				}).then((res) => {
+					console.log(res);
+				})
+			}
 		}
 	}
 </script>
