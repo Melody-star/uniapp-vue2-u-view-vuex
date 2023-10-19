@@ -1,12 +1,10 @@
 import {
 	baseUrl
 } from '@/config/host.js'
+import store from '@/store/index.js'
 
 const request = (url, method, data, options) =>
 	new Promise((resolve, reject) => {
-
-		// const fullUrl = baseUrl + url
-
 		uni.request({
 			url,
 			method,
@@ -27,9 +25,11 @@ const httpInterceptor = {
 			option.url = baseUrl + option.url
 		}
 		option.timeout = 10000
-		option.header = {
-			...option.header,
-
+		const token = store.getters.getToken
+		if (token) {
+			option.header = {
+				Authorization: token
+			}
 		}
 	}
 }
